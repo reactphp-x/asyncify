@@ -1,0 +1,19 @@
+{
+    "name": "reactphp-framework/asyncify",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Reactphp\\Framework\\Asyncify\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wpjscc",
+            "email": "wpjscc@gmail.com"
+        }
+    ],
+    "require": {
+        "reactphp-framework/process": "^1.0",
+        "react/promise": "^3.1"
+    }
+}
