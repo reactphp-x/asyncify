@@ -15,12 +15,12 @@ promise
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\asyncify;
+use Reactphp\Framework\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 use React\Promise\Deferred;
 
 $word = 'world';
-asyncify::call(function () use ($word) {
+Asyncify::call(function () use ($word) {
     return [
         'hello' => $word
     ];
@@ -33,7 +33,7 @@ asyncify::call(function () use ($word) {
 });
 
 
-asyncify::call(function () {
+Asyncify::call(function () {
     return file_get_contents(__DIR__ . '/test.txt');
 })->then(function ($data) {
     var_dump($data);
@@ -43,7 +43,7 @@ asyncify::call(function () {
     var_dump($e->getMessage(), 'catch');
 });
 
-asyncify::call(function () {
+Asyncify::call(function () {
     $deferred = new Deferred();
     Loop::addTimer(1, function () use ($deferred) {
         $deferred->resolve('hello world promise');
@@ -58,7 +58,7 @@ asyncify::call(function () {
 });
 
 Loop::addTimer(2, function () {
-    Async::terminate();
+    Asyncify::terminate();
 });
 
 ```
@@ -69,11 +69,11 @@ stream
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\asyncify;
+use Reactphp\Framework\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 
 $word = 'world';
-$stream = asyncify::call(function () use ($word) {
+$stream = Asyncify::call(function () use ($word) {
     return [
         'hello' => $word
     ];
@@ -93,7 +93,7 @@ $stream->on('error', function ($e) {
 
 
 Loop::addTimer(1, function () {
-    Async::terminate();
+    Asyncify::terminate();
 });
 ```
 ```php
@@ -101,11 +101,11 @@ Loop::addTimer(1, function () {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\Async;
+use Reactphp\Framework\Asyncify\Asyncify;
 use React\Stream\ThroughStream;
 use React\EventLoop\Loop;
 
-$stream = Async::call(function (){
+$stream = Asyncify::call(function (){
     $stream = new ThroughStream();
     $i = 0;
     $timer = Loop::addPeriodicTimer(1, function () use ($stream, &$i) {
@@ -132,6 +132,6 @@ $stream->on('error', function ($e) {
 });
 
 Loop::addTimer(6, function () {
-    Async::terminate();
+    Asyncify::terminate();
 });
 ```
