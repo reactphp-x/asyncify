@@ -2,14 +2,14 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\Async;
+use Reactphp\Framework\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 
 $word = 'world';
-$stream = Async::call(function () use ($word) {
-    return [
+$stream = Asyncify::call(function () use ($word) {
+    return json_encode([
         'hello' => $word
-    ];
+    ]);
 }, true);
 
 $stream->on('data', function ($data) {
@@ -26,5 +26,5 @@ $stream->on('error', function ($e) {
 
 
 Loop::addTimer(1, function () {
-    Async::terminate();
+    Asyncify::terminate();
 });

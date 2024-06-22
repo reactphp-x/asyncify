@@ -2,12 +2,11 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\Async;
-use React\Stream\ThroughStream;
+use Reactphp\Framework\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 
-$stream = Async::call(function (){
-    $stream = new ThroughStream();
+$stream = Asyncify::call(function ($stream){
+
     $i = 0;
     $timer = Loop::addPeriodicTimer(1, function () use ($stream, &$i) {
         $i++;
@@ -33,5 +32,5 @@ $stream->on('error', function ($e) {
 });
 
 Loop::addTimer(6, function () {
-    Async::terminate();
+    Asyncify::terminate();
 });
