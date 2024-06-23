@@ -28,6 +28,7 @@ class Asyncify
 
         $stream->on('close', function () use ($deferred, &$data) {
             $deferred->resolve($data);
+            $data = null;
         });
         
         $stream->on('error', function ($e) use ($deferred) {
