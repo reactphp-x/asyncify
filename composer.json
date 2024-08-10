@@ -1,9 +1,9 @@
 {
-    "name": "reactphp-framework/asyncify",
+    "name": "reactphp-x/asyncify",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Reactphp\\Framework\\Asyncify\\": "src/"
+            "ReactphpX\\Asyncify\\": "src/"
         }
     },
     "authors": [
@@ -13,6 +13,6 @@
         }
     ],
     "require": {
-        "reactphp-framework/process-manager": "^0.0.5"
+        "reactphp-x/process-manager": "^0.0.5"
     }
 }

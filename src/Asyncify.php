@@ -1,8 +1,8 @@
 <?php
 
-namespace Reactphp\Framework\Asyncify;
+namespace ReactphpX\Asyncify;
 
-use Reactphp\Framework\ProcessManager\ProcessManager;
+use ReactphpX\ProcessManager\ProcessManager;
 use React\Promise\Deferred;
 
 class Asyncify

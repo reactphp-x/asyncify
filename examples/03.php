@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\Asyncify;
+use ReactphpX\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 
 $stream = Asyncify::call(function ($stream){

@@ -1,9 +1,9 @@
-# reactphp-framework-asyncify
+# reactphp-x-asyncify
 
 ## install
 
 ```
-composer require reactphp-framework/asyncify -vvv
+composer require reactphp-x/asyncify -vvv
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ promise
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\Asyncify;
+use ReactphpX\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 use React\Promise\Deferred;
 
@@ -69,7 +69,7 @@ stream
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\Asyncify;
+use ReactphpX\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 
 $word = 'world';
@@ -101,7 +101,7 @@ Loop::addTimer(1, function () {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Reactphp\Framework\Asyncify\Asyncify;
+use ReactphpX\Asyncify\Asyncify;
 use React\Stream\ThroughStream;
 use React\EventLoop\Loop;
 
