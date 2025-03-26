@@ -13,6 +13,6 @@
         }
     ],
     "require": {
-        "reactphp-x/process-manager": "^0.0.5"
+        "reactphp-x/process-manager": "^0.0.7"
     }
 }
