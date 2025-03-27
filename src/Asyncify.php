@@ -4,22 +4,28 @@ namespace ReactphpX\Asyncify;
 
 use ReactphpX\ProcessManager\ProcessManager;
 use React\Promise\Deferred;
+use function React\Async\await;
 
 class Asyncify
 {
-    static $number = 1;
-    static $key = 'asyncify';
+    static $processmanager;
 
-    public static function call(callable $callable, $isStream = false)
+
+    public static function call(callable $callable, $isStream = false, $prioritize = 0)
     {
-        ProcessManager::instance(static::$key)->setNumber(static::$number);
-        $stream = ProcessManager::instance(static::$key)->call($callable);
+        if (!static::$processmanager) {
+            static::init();
+        }
+
+        $stream = await(static::$processmanager->run($callable, $prioritize));
 
         if ($isStream) {
             return $stream;
         }
 
-        $deferred = new Deferred();
+        $deferred = new Deferred(function() use ($stream){
+            $stream->close();
+        });
 
         $data = null;
         $stream->on('data', function ($buffer) use (&$data) {
@@ -38,8 +44,15 @@ class Asyncify
         return $deferred->promise();
     }
 
-    public static function __callStatic($method, $arguments)
+    public static function init($min = 1, $max = 1)
     {
-        ProcessManager::instance(static::$key)->{$method}(...$arguments);
+        if (static::$processmanager) {
+            return;
+        }
+        static::$processmanager = new ProcessManager(sprintf(
+            'exec php %s/child_process_init.php',
+            __DIR__
+        ), $min, $max);
+
     }
 }

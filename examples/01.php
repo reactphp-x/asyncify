@@ -8,9 +8,9 @@ use React\Promise\Deferred;
 
 $word = 'world';
 Asyncify::call(function () use ($word) {
-    return [
+    return json_encode([
         'hello' => $word
-    ];
+    ]);
 })->then(function ($data) {
     var_dump($data);
 }, function ($e) {
@@ -44,6 +44,4 @@ Asyncify::call(function () {
     var_dump($e->getMessage(), 'catch');
 });
 
-Loop::addTimer(2, function () {
-    Asyncify::terminate();
-});
+

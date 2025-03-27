@@ -30,7 +30,3 @@ $stream->on('close', function () {
 $stream->on('error', function ($e) {
     var_dump($e->getMessage(), 'error');
 });
-
-Loop::addTimer(6, function () {
-    Asyncify::terminate();
-});
