@@ -13,7 +13,6 @@
         }
     ],
     "require": {
-        "reactphp-x/process-manager": "^1.0",
-        "react/async": "^4.3"
+        "reactphp-x/process-manager": "^1.0"
     }
 }

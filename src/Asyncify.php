@@ -4,7 +4,6 @@ namespace ReactphpX\Asyncify;
 
 use ReactphpX\ProcessManager\ProcessManager;
 use React\Promise\Deferred;
-use function React\Async\await;
 
 class Asyncify
 {
@@ -16,14 +15,19 @@ class Asyncify
         if (!static::$processmanager) {
             static::init();
         }
+        return static::$processmanager->run($callable, $prioritize)->then(function ($stream) use ($isStream) {
+            if ($isStream) {
+                return $stream;
+            }
+            return static::streamToPromise($stream);
+        }, function ($e) {
+            throw $e;
+        });
+    }
 
-        $stream = await(static::$processmanager->run($callable, $prioritize));
-
-        if ($isStream) {
-            return $stream;
-        }
-
-        $deferred = new Deferred(function() use ($stream){
+    protected static function streamToPromise($stream)
+    {
+        $deferred = new Deferred(function () use ($stream) {
             $stream->close();
         });
 
@@ -36,7 +40,7 @@ class Asyncify
             $deferred->resolve($data);
             $data = null;
         });
-        
+
         $stream->on('error', function ($e) use ($deferred) {
             $deferred->reject($e);
         });
@@ -53,6 +57,5 @@ class Asyncify
             'exec php %s/child_process_init.php',
             __DIR__
         ), $min, $max);
-
     }
 }

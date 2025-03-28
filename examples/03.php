@@ -5,7 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use ReactphpX\Asyncify\Asyncify;
 use React\EventLoop\Loop;
 
-$stream = Asyncify::call(function ($stream){
+Asyncify::call(function ($stream){
 
     $i = 0;
     $timer = Loop::addPeriodicTimer(1, function () use ($stream, &$i) {
@@ -17,16 +17,18 @@ $stream = Asyncify::call(function ($stream){
         $stream->end();
     });
     return $stream;
-}, true);
-
-$stream->on('data', function ($data) {
-    var_dump($data);
+}, true)->then(function($stream){
+    $stream->on('data', function ($data) {
+        var_dump($data);
+    });
+    
+    $stream->on('close', function () {
+        var_dump('Stream closed');
+    });
+    
+    $stream->on('error', function ($e) {
+        var_dump($e->getMessage(), 'error');
+    });
+    
 });
 
-$stream->on('close', function () {
-
-});
-
-$stream->on('error', function ($e) {
-    var_dump($e->getMessage(), 'error');
-});
